@@ -1,0 +1,13 @@
+Pony Rivers
+mrponyrivers@gmail.com | +1 555 010 2000
+https://github.com/mrponyrivers | https://www.linkedin.com/in/ponyrivers
+
+SKILLS
+Python, SQL, Excel, Google Sheets, Git, GitHub, APIs, JSON, CSV, Automation
+
+EXPERIENCE
+Built an NFL PowerBook betting engine in Google Sheets with automated odds ingestion and EV logic.
+Created a Python CLI tool to compute EV and recommended stake sizing.
+
+EDUCATION
+Self-directed learning: Python fundamentals and automation projects.
