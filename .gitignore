@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+
+# Never commit real resumes
+*.pdf
+*resume*.pdf
+*resume*.txt
+
+# Generated outputs (optional to ignore)
+resume.json
+report.md
