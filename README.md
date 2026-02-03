@@ -1,4 +1,6 @@
 # Resume Extractor (Local)
+## Live demo
+<your streamlit url>
 
 Local-only resume parser that extracts basic fields from a resume PDF/TXT into:
 - resume.json
