@@ -1,5 +1,4 @@
 import json
-import os
 import sys
 import tempfile
 from pathlib import Path
@@ -20,17 +19,35 @@ st.set_page_config(page_title="Resume Extractor (Local)", page_icon="📄", layo
 st.title("📄 Resume Extractor (Local)")
 st.caption("Upload a resume (PDF or TXT) → get structured JSON + a Markdown report. (Local parsing; no external LLM.)")
 
-uploaded = st.file_uploader("Upload resume (.pdf or .txt)", type=["pdf", "txt"])
+SAMPLE_PATH = ROOT / "sample_resume.txt"
 
-if not uploaded:
-    st.info("Upload a PDF or TXT resume to begin.")
-    st.stop()
+# --- Input: sample button OR uploader ---
+colA, colB = st.columns([1, 2])
+with colA:
+    use_sample = st.button("📄 Use sample_resume.txt", use_container_width=True)
+with colB:
+    uploaded = st.file_uploader("Upload resume (.pdf or .txt)", type=["pdf", "txt"])
 
-# Save upload to a temp file so your existing extractor can read it
-suffix = Path(uploaded.name).suffix.lower() or ".pdf"
-with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
-    tmp.write(uploaded.getbuffer())
-    in_path = Path(tmp.name)
+# Decide input file path
+temp_file_path = None  # track temp upload so we only delete temp files
+
+if use_sample:
+    if not SAMPLE_PATH.exists():
+        st.error("sample_resume.txt not found in the repo root.")
+        st.stop()
+    in_path = SAMPLE_PATH
+else:
+    if not uploaded:
+        st.info("Upload a PDF/TXT resume, or click **📄 Use sample_resume.txt**.")
+        st.stop()
+
+    # Save upload to a temp file so your existing extractor can read it
+    suffix = Path(uploaded.name).suffix.lower() or ".pdf"
+    with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+        tmp.write(uploaded.getbuffer())
+        temp_file_path = tmp.name
+
+    in_path = Path(temp_file_path)
 
 try:
     with st.spinner("Extracting resume fields..."):
@@ -56,6 +73,7 @@ try:
             data=json.dumps(data, indent=2).encode("utf-8"),
             file_name="resume.json",
             mime="application/json",
+            use_container_width=True,
         )
 
     with col2:
@@ -66,14 +84,15 @@ try:
             data=report_md.encode("utf-8"),
             file_name="report.md",
             mime="text/markdown",
+            use_container_width=True,
         )
 
     st.success("Done.")
 
 finally:
-    # Clean up the uploaded temp file
-    try:
-        in_path.unlink(missing_ok=True)
-    except Exception:
-        pass
-
+    # Clean up ONLY the uploaded temp file (never delete sample_resume.txt)
+    if temp_file_path:
+        try:
+            Path(temp_file_path).unlink(missing_ok=True)
+        except Exception:
+            pass
