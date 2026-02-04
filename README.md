@@ -1,5 +1,5 @@
 # Resume Extractor (Local)
-st.info("Instant demo: click **📄 Use sample_resume.txt** (no upload required).")
+**Instant demo:** click **📎 Load sample PDF** (no upload required).
 
 ## Live demo
 <https://mrponyrivers-resume-extractor.streamlit.app/>
