@@ -17,7 +17,7 @@ from resume_tool.cli import write_report_md  # noqa: E402
 
 st.set_page_config(page_title="Resume Extractor (Local)", page_icon="📄", layout="wide")
 st.title("📄 Resume Extractor (Local)")
-st.caption("Upload a resume (PDF or TXT) → get structured JSON + a Markdown report. (Local parsing; no external LLM.)")
+
 
 SAMPLE_PATH = ROOT / "sample_resume.txt"
 
