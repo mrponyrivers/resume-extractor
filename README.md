@@ -1,5 +1,4 @@
-# Resume Extractor (Local)
-**Instant demo:** click **📎 Load sample PDF** (no upload required).
+# Resume Extractor (Local).
 
 ## Live demo
 <https://mrponyrivers-resume-extractor.streamlit.app/>
